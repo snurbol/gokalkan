@@ -1,7 +1,7 @@
 package gokalkan
 
 import (
-	"github.com/gokalkan/gokalkan/ckalkan"
+	"github.com/snurbol/gokalkan/ckalkan"
 )
 
 func (cli *Client) ValidateCert(cert string) (string, error) {

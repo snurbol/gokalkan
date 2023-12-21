@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/gokalkan/gokalkan/ckalkan"
+	"github.com/snurbol/gokalkan/ckalkan"
 )
 
 var ErrLoadKey = errors.New("load key error")
