@@ -36,27 +36,31 @@ func (cli *Client) SignXML(xmlData string) (string, error) {
 
 func (cli *Client) SignWSSE(xmlData, id string) (string, error) {
 	soapEnvelope := WrapWithWSSESoapEnvelope(xmlData, id)
-	return cli.kc.SignWSSE(soapEnvelope, "", 0, id)
+	return cli.kc.SignWSSE(soapEnvelope, "", 16777232, id)
 }
 
 const (
-	xmlnsSOAP = "http://schemas.xmlsoap.org/soap/envelope/"
-	xmlnsWSU  = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlnsSOAP    = "http://schemas.xmlsoap.org/soap/envelope/"
+	xmlnsSOAPENV = "http://schemas.xmlsoap.org/soap/envelope/"
+	xmlnsBodyWsu = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlnsBodyNs2 = "http://bip.bee.kz/SyncChannel/v10/Types"
 
 	replaceKey = "replace-this"
 )
 
 // soapEnvelope представляет soap:Envelope
 type soapEnvelope struct {
-	XMLName xml.Name `xml:"soap:Envelope"`
-	SOAP    string   `xml:"xmlns:soap,attr"`
-	WSU     string   `xml:"xmlns:wsu,attr"`
-	Body    soapBody `xml:"soap:Body"`
+	XMLName xml.Name `xml:"S:Envelope"`
+	SOAP    string   `xml:"xmlns:S,attr"`
+	SOAPENV string   `xml:"xmlns:SOAP-ENV,attr"`
+	Body    soapBody `xml:"S:Body"`
 }
 
 // soapBody представляет soap:Body
 type soapBody struct {
 	ID      string `xml:"wsu:Id,attr"`
+	Wsu     string `xml:"xmlns:wsu,attr"`
+	Ns2     string `xml:"xmlns:ns2,attr"`
 	Content string `xml:",chardata"`
 }
 
@@ -64,10 +68,12 @@ type soapBody struct {
 // содержимое под тегом soap:Body
 func WrapWithWSSESoapEnvelope(dataXML, id string) (result string) {
 	envelope := soapEnvelope{
-		SOAP: xmlnsSOAP,
-		WSU:  xmlnsWSU,
+		SOAP:    xmlnsSOAP,
+		SOAPENV: xmlnsSOAPENV,
 		Body: soapBody{
 			ID:      id,
+			Wsu:     xmlnsBodyWsu,
+			Ns2:     xmlnsBodyNs2,
 			Content: replaceKey,
 		},
 	}
