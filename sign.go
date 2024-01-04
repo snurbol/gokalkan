@@ -43,7 +43,7 @@ const (
 	xmlnsSOAP    = "http://schemas.xmlsoap.org/soap/envelope/"
 	xmlnsSOAPENV = "http://schemas.xmlsoap.org/soap/envelope/"
 	xmlnsBodyWsu = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
-	//xmlnsBodyNs2 = "http://bip.bee.kz/SyncChannel/v10/Types"
+	xmlnsBodyNs0 = "http://bip.bee.kz/SyncChannel/v10/Types"
 
 	replaceKey = "replace-this"
 )
@@ -58,9 +58,9 @@ type soapEnvelope struct {
 
 // soapBody представляет soap:Body
 type soapBody struct {
-	ID  string `xml:"wsu:Id,attr"`
-	Wsu string `xml:"xmlns:wsu,attr"`
-	//Ns2     string `xml:"xmlns:ns2,attr"`
+	ID      string `xml:"wsu:Id,attr"`
+	Wsu     string `xml:"xmlns:wsu,attr"`
+	Ns0     string `xml:"xmlns:ns0,attr"`
 	Content string `xml:",chardata"`
 }
 
@@ -71,9 +71,9 @@ func WrapWithWSSESoapEnvelope(dataXML, id string) (result string) {
 		SOAP:    xmlnsSOAP,
 		SOAPENV: xmlnsSOAPENV,
 		Body: soapBody{
-			ID:  id,
-			Wsu: xmlnsBodyWsu,
-			//Ns2:     xmlnsBodyNs2,
+			ID:      id,
+			Wsu:     xmlnsBodyWsu,
+			Ns0:     xmlnsBodyNs0,
 			Content: replaceKey,
 		},
 	}
