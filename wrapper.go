@@ -13,6 +13,8 @@ type Kalkan interface {
 	LoadKeyStore(path, password string) (err error)
 	LoadKeyStoreFromBytes(key []byte, password string) (err error)
 
+	X509ExportCertificateFromStore(alias string) (result string, err error)
+
 	Sign(data []byte, isDetached, withTSP bool) (signature []byte, err error)
 	SignXML(xml string) (signedXML string, err error)
 	SignWSSE(xml, id string) (signedXML string, err error)
