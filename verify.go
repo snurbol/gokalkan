@@ -9,7 +9,7 @@ import (
 // Verify обеспечивает проверку подписи CMS в base64.
 func (cli *Client) Verify(signature []byte) (string, error) {
 	signatureB64 := base64.StdEncoding.EncodeToString(signature)
-	flags := ckalkan.FlagSignCMS | ckalkan.FlagInBase64 | ckalkan.FlagOutBase64
+	flags := ckalkan.FlagSignCMS | ckalkan.FlagInBase64 | ckalkan.FlagOutBase64 | ckalkan.FlagNoCheckCertTime
 
 	resp, err := cli.kc.VerifyData(signatureB64, "", "", flags)
 	if err != nil {
