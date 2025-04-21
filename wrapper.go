@@ -19,11 +19,11 @@ type Kalkan interface {
 	SignXML(xml string) (signedXML string, err error)
 	SignWSSE(xml, id string) (signedXML string, err error)
 
-	Verify(signature []byte) (string, error)
+	Verify(signatureInBase64 string) (string, error)
 	VerifyXML(signedXML string) (string, error)
 	VerifyDetached(signature, data []byte) (string, error)
 
-	GetCertFromCMS(cms []byte, signID int) (string, error)
+	GetCertFromCMS(cmsInBase64 string, signID int) (string, error)
 
 	ValidateCert(cert string) (string, error)
 	ValidateCertOCSP(cert string, url ...string) (string, error)
