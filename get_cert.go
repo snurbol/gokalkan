@@ -1,10 +1,6 @@
 package gokalkan
 
-import (
-	"encoding/base64"
-
-	"github.com/snurbol/gokalkan/ckalkan"
-)
+import "github.com/snurbol/gokalkan/ckalkan"
 
 // GetCertFromCMS обеспечивает получение сертификата из CMS.
 func (cli *Client) GetCertFromCMS(cmsInBase64 string, signID int) (string, error) {
