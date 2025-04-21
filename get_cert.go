@@ -7,7 +7,7 @@ import (
 )
 
 // GetCertFromCMS обеспечивает получение сертификата из CMS.
-func (cli *Client) GetCertFromCMS(cms []byte, signID int) (string, error) {
-	cmsB64 := base64.StdEncoding.EncodeToString(cms)
-	return cli.kc.GetCertFromCMS(cmsB64, signID, ckalkan.FlagInBase64)
+func (cli *Client) GetCertFromCMS(cmsInBase64 string, signID int) (string, error) {
+	flags := ckalkan.FlagInBase64 | ckalkan.FlagNoCheckCertTime
+	return cli.kc.GetCertFromCMS(cmsInBase64, signID, flags)
 }
